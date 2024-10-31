@@ -20,6 +20,6 @@ extern Chunk* chunk_list_tail;
 Chunk* create_new_chunk(void *ptr, size_t size);
 void divide_chunk(Chunk* chunk, size_t size);
 Chunk* find_free_chunk(size_t size);
-void fuse_free_chunks(void);
+void fuse_free_chunks(Chunk* chunk);
 
 #endif

@@ -61,8 +61,7 @@ Chunk* find_free_chunk(size_t size) {
 
 
 //Function that fuses one or more free chunks in sequence
-void fuse_free_chunks(void) {
-    Chunk* chunk = chunk_list_head;
+void fuse_free_chunks(Chunk* chunk) {
     while (chunk != NULL && chunk->free == true) {
         Chunk* next_chunk = chunk->next;
         while (next_chunk != NULL && next_chunk->free) {

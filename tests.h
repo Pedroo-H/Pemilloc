@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <mymalloc.h>
+#include "mymalloc.h"
 
 #define NUM_POINTERS 1 << 15
 #define NUM_CYCLES 1 << 15
