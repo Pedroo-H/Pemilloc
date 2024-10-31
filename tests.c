@@ -25,7 +25,7 @@ int main(void)
     puts("");
 
     printf("%s\n", "*** Fazendo o benchmark das funções proprias ***");
-    float time_mymalloc = benchmark(&mymalloc, &mymalloc);
+    float time_mymalloc = benchmark(&mymalloc, &myfree);
 
     float efficiency = (time_malloc / time_mymalloc) * 100;
     printf("A eficiência de mymalloc em relação a malloc é: %.2f%%\n", efficiency);
