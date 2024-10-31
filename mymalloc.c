@@ -7,7 +7,6 @@ size_t heap_max_size = 0;
 
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
-// Function that initializes the heap
 void mymallocinit(void) {
     pthread_mutex_lock(&lock);
     size_t size = 1024;
@@ -16,10 +15,8 @@ void mymallocinit(void) {
     pthread_mutex_unlock(&lock);
 }
 
-// Function that requests the OS for more memory in case of heap exhaustion
 void* requestMemory(size_t size) {
     void* ptr;
-    
     pthread_mutex_lock(&lock);
     
     void* link_chunk_ptr = (char*)heap_head + heap_size;
@@ -35,22 +32,17 @@ void* requestMemory(size_t size) {
 
     heap_max_size += 1024 - size;
     heap_size += size;
-
     link_chunk->next = ptr;
-    pthread_mutex_unlock(&lock);
 
+    pthread_mutex_unlock(&lock);
     return ptr;
 }
 
-// Function that allocates memory
 void* mymalloc(size_t size) {
     if (size == 0) return NULL; 
-
     size = (size + sizeof(void*) - 1) & ~(sizeof(void*) - 1);
     
     Chunk* free_chunk;
-
-    // Lock only when checking and modifying the shared state
     pthread_mutex_lock(&lock);
     free_chunk = find_free_chunk(size);
     
@@ -60,7 +52,6 @@ void* mymalloc(size_t size) {
         pthread_mutex_unlock(&lock);
         return ptr;
     }
-
     if (heap_size + size <= heap_max_size) {
         void* ptr = (char*)heap_head + heap_size;
         create_new_chunk(ptr, size);
@@ -70,11 +61,9 @@ void* mymalloc(size_t size) {
     }
     
     pthread_mutex_unlock(&lock);
-    
-    // Request memory outside the lock
     void* ptr = requestMemory(size);
+
     if (ptr != NULL) {
-        // Lock again to update the chunk list
         pthread_mutex_lock(&lock);
         create_new_chunk(ptr, size);
         pthread_mutex_unlock(&lock);
@@ -83,7 +72,6 @@ void* mymalloc(size_t size) {
     return ptr;
 }
 
-// Function that frees memory
 void myfree(void* ptr) {
     pthread_mutex_lock(&lock);
     

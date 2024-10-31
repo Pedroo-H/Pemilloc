@@ -3,8 +3,6 @@
 Chunk* chunk_list_head = NULL;
 Chunk* chunk_list_tail = NULL;
 
-
-//Function that creates a chunk
 Chunk* create_new_chunk(void *ptr, size_t size) {
     Chunk* chunk = (Chunk*)sbrk(sizeof(Chunk));
     if (chunk == (void*) -1) {
@@ -25,7 +23,6 @@ Chunk* create_new_chunk(void *ptr, size_t size) {
 }
 
 
-//Function that divides a chunk if necessary
 void divide_chunk(Chunk* chunk, size_t size) {
     Chunk* new_chunk = (Chunk*)sbrk(sizeof(Chunk));
     if (new_chunk == (void*) -1) {
@@ -40,8 +37,6 @@ void divide_chunk(Chunk* chunk, size_t size) {
     chunk->next = new_chunk;
 }
 
-
-//Function that finds free chunk that fits in the requisits
 Chunk* find_free_chunk(size_t size) {
     Chunk* chunk = chunk_list_head;
     Chunk* free_chunk = NULL;
@@ -59,8 +54,6 @@ Chunk* find_free_chunk(size_t size) {
     return free_chunk;
 }
 
-
-//Function that fuses one or more free chunks in sequence
 void fuse_free_chunks(Chunk* chunk) {
     while (chunk != NULL && chunk->free == true) {
         Chunk* next_chunk = chunk->next;

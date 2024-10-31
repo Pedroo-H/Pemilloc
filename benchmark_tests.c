@@ -1,4 +1,4 @@
-#include "tests.h"
+#include "benchmark_tests.h"
 
 float benchmark(malloc_func* malloc, free_func* free) {
     void* ptrs[NUM_POINTERS];
