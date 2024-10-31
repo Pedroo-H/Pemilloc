@@ -5,9 +5,6 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-Chunk* chunk_list_head = NULL;
-Chunk* chunk_list_tail = NULL;
-
 typedef struct Chunk {
     void* init;
     struct Chunk* next;
@@ -15,6 +12,10 @@ typedef struct Chunk {
     size_t size;
     bool free;
 } Chunk;
+
+extern Chunk* chunk_list_head = NULL;
+extern Chunk* chunk_list_tail = NULL;
+
 
 void create_new_chunk(void *ptr, size_t size);
 void divide_chunk(Chunk* chunk, size_t size);

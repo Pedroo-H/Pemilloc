@@ -4,6 +4,7 @@ void* heap_head = NULL;
 size_t heap_size = 0;
 size_t heap_max_size = 0;
 
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // lock to handle concurrency. 
 
 //Function thar initializes the heap
 void mymallocinit(void) {
@@ -40,14 +41,14 @@ void* mymalloc(size_t size) {
 
     if (free_chunk == NULL) {    
         if (heap_size + size < heap_max_size) {
-            void* ptr = (void*)((char*)heap_head + heap_size); // Corrigido o tipo
-            create_chunk(ptr, size);
+            void* ptr = (void*)((char*)heap_head + heap_size + size); // Corrigido o tipo
+            create_new_chunk(ptr, size);
             pthread_mutex_unlock(&lock);
 
             return ptr;
         } else {
             void* ptr = requestMemory(size);
-            create_chunk(ptr, size);
+            create_new_chunk(ptr, size);
 
             pthread_mutex_unlock(&lock);
 

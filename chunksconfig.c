@@ -1,5 +1,7 @@
 #include "chunksconfig.h"
 
+Chunk* chunk_list_head = NULL;
+Chunk* chunk_list_tail = NULL;
 
 //Function that creates a chunk
 void create_new_chunk(void *ptr, size_t size) {
@@ -69,7 +71,7 @@ Chunk* find_free_chunk(size_t size) {
 void fuse_free_chunks(void) {
     Chunk* chunk = chunk_list_head;
 
-    while (chunk != NULL) {
+    while (chunk != NULL && chunk->free == true) {
         Chunk* next_chunk = chunk->next;
         while (next_chunk != NULL && next_chunk->free) {
             chunk->size += next_chunk->size;
