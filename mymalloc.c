@@ -22,13 +22,20 @@ void mymallocinit(void) {
 void* requestMemory(size_t size) {
     pthread_mutex_lock(&lock);
 
-    size *= 2; 
-    void* ptr = sbrk(size);
+    void* link_chunk_ptr = heap_head + heap_size;
+    size_t link_chunk_size = heap_max_size - heap_size;
+    Chunk* link_chunk = create_new_chunk(link_chunk_ptr, link_chunk_size);
+    link_chunk->free = true;
+ 
+    void* ptr = sbrk(1024 - size);
     if (ptr == (void*) -1) {
         return NULL; 
     }
+
+    heap_max_size += 1024 - size;
     heap_size += size;
 
+    link_chunk->next = ptr;
     pthread_mutex_unlock(&lock);
 
     return ptr;
@@ -80,4 +87,7 @@ void myfree(void* ptr) {
         }
         chunk = chunk->next;
     }
+    pthread_mutex_unlock(&lock);
+
+    return;
 }
