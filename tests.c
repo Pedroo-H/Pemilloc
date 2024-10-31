@@ -20,6 +20,7 @@ float benchmark(malloc_func* malloc, free_func* free) {
 
 int main(void)
 {
+    mymallocinit();
     printf("%s\n", "*** Fazendo benchmark das funções do GNU ***");
     float time_malloc = benchmark(&malloc, &free);
     puts("");

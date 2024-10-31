@@ -11,7 +11,6 @@ extern void* heap_head;
 extern size_t heap_size;
 extern size_t heap_max_size;
 
-extern pthread_mutex_t lock;
 
 void mymallocinit(void);
 void* requestMemory(size_t size);
