@@ -13,8 +13,8 @@ typedef struct Chunk {
     bool free;
 } Chunk;
 
-extern Chunk* chunk_list_head = NULL;
-extern Chunk* chunk_list_tail = NULL;
+extern Chunk* chunk_list_head;
+extern Chunk* chunk_list_tail;
 
 
 void create_new_chunk(void *ptr, size_t size);
