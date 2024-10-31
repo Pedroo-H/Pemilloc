@@ -79,7 +79,7 @@ void myfree(void* ptr) {
     while (chunk != NULL) {
         if (chunk->init == ptr) {
             chunk->free = true;
-            fuse_free_chunks();
+            fuse_free_chunks(chunk);
 
             pthread_mutex_unlock(&lock);
 

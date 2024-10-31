@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "tests.h"
 
 float benchmark(malloc_func* malloc, free_func* free) {
